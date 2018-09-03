@@ -73,19 +73,15 @@ def rows(src):
   for line in src:
       l += [line.split('#', 1)[0]]
                        
-  # a = list of elements with blank elements removed. 
+  #list of elements with blank spaces removed. 
   a = list(filter(None, l))
-  
-  
-  # Strip spaces in elements in list a
   a = [x.strip() for x in a]                 
   
-  # For elements ending with a acomma, concatenate them into a single line.
+  # Concatenate elements ending with comma with the next 
   clean_data_list = []
   concat_str = ""
   for index, ele in enumerate(a):
       if ele.endswith(','):
-          #print("Element with a comma: ", ele)
           concat_str += ele
       elif a[index-1].endswith(','):
           concat_str += ele
@@ -99,9 +95,9 @@ def rows(src):
   src = clean_data_list
   return src
 
+
 def cols(src):
-    
-    # Get the headers of the source as a list using the split function
+    # Get the headers of the source as a list
     headers = src[0].split(',')
     
     # Get the indexes of the columns beginning with a '?' into a list
@@ -111,30 +107,21 @@ def cols(src):
     for i in index:
         del headers[i]
     
-    # create a list to store the elements without the data thta begins with '?'
+    # create a list to store the elements without the data that begins with '?'
     rem_cols_list = []
     # Append the headers to the list
     rem_cols_list.append(headers)
-    # iterate through the remaining data and remove elements that have a index equal to the 
-    # one that we found out
+    # iterate through the remaining data and remove elements with index equal to one we found
     for rec in src[1:]:
         rec_new = [element for i, element in enumerate(rec.split(',')) if i not in index]
         rem_cols_list.append(rec_new)
-        
-    #print ("Deleted Columns list: " , rem_cols_list)
-    #print (len(src))
-    #print (len(rem_cols_list))
-    
-        
-    #lol = []
-    #for ele in src:
-    #    lol.append(ele)
-    #print(lol)
+       
     src = rem_cols_list
     return src
 
+
 def prep(src):
-    #taken indexes of elements with $ in first list
+    #take indexes of elements with $ in first list
     index = [i for i,element in enumerate(src[0]) if element.startswith('$')]
     print(index)
     
